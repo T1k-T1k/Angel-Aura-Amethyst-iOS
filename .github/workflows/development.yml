@@ -71,6 +71,7 @@ jobs:
           export PATH="$JDK_BASE_PATH/bin:/opt/homebrew/bin:$PATH"
           export JAVA_HOME="$JDK_BASE_PATH"
           export BOOTJDK="$JDK_BASE_PATH/bin"
+          export SLIMMED=1
           
           export CODE_SIGNING_ALLOWED=NO
           export CODE_SIGNING_REQUIRED=NO
@@ -90,22 +91,42 @@ jobs:
         if: always()
         run: ls -la artifacts/ || true
 
-      - name: Upload TrollStore tIPA
+      - name: Upload TrollStore tIPA (full)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: org.angelauramc.amethyst-ios-trollstore
-          path: artifacts/*-trollstore.tipa
+          path: artifacts/org.angelauramc.amethyst-*-ios-trollstore.tipa
           retention-days: 30
           if-no-files-found: warn
           compression-level: 0
 
-      - name: Upload regular IPA
+      - name: Upload TrollStore tIPA (slimmed)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: org.angelauramc.amethyst-ios-trollstore-slimmed
+          path: artifacts/org.angelauramc.amethyst.slimmed-*-ios-trollstore.tipa
+          retention-days: 30
+          if-no-files-found: warn
+          compression-level: 0
+
+      - name: Upload regular IPA (full)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: org.angelauramc.amethyst-ios
-          path: artifacts/*.ipa
+          path: artifacts/org.angelauramc.amethyst-*-ios.ipa
+          retention-days: 30
+          if-no-files-found: warn
+          compression-level: 0
+
+      - name: Upload regular IPA (slimmed)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: org.angelauramc.amethyst-ios-slimmed
+          path: artifacts/org.angelauramc.amethyst.slimmed-*-ios.ipa
           retention-days: 30
           if-no-files-found: warn
           compression-level: 0
